@@ -65,3 +65,14 @@ export interface AnswerData {
   questionIndex: number;
   answerIndex: number;
 }
+
+export interface IReg {
+  type: 'reg',
+  data: {
+    name: string,
+    index: number | string,
+    error: boolean,
+    errorText: string,
+  },
+  id: 0
+}
