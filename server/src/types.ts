@@ -1,5 +1,9 @@
 import type { WebSocket } from 'ws';
 
+export interface AuthenticatedWebSocket extends WebSocket {
+  playerId?: number | string;
+}
+
 export interface Player {
   name: string;
   index: string;

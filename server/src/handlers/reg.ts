@@ -1,8 +1,7 @@
-import { WebSocket } from 'ws';
-import { nameToId, players } from "../store";
-import { IReg, WSMessage } from "../types";
+import { incrementPlayerId, nameToId, nextPlayerId, players } from "../store";
+import { AuthenticatedWebSocket, IReg, WSMessage } from "../types";
 
-export const reg = (nextPlayerId: number, message: WSMessage, ws: WebSocket): number => {
+export const reg = (message: WSMessage, ws: AuthenticatedWebSocket) => {
   const { name, password } = message.data;
   const existingPlayerId = nameToId.get(name);
   const response: IReg = {
@@ -18,10 +17,10 @@ export const reg = (nextPlayerId: number, message: WSMessage, ws: WebSocket): nu
 
   if (existingPlayerId === undefined) {
     const newId = nextPlayerId;
-    nextPlayerId++;
+    incrementPlayerId();
     players.set(newId, { name, password, ws });
     nameToId.set(name, newId);
-    (ws as any).playerId = newId;
+    ws.playerId = newId;
     response.data.index = newId;
     ws.send(JSON.stringify(response));
 
@@ -31,7 +30,7 @@ export const reg = (nextPlayerId: number, message: WSMessage, ws: WebSocket): nu
 
     if (existingPlayer && existingPlayer.password === password) {
       existingPlayer.ws = ws;
-      (ws as any).playerId = existingPlayerId;
+      ws.playerId = existingPlayerId;
       ws.send(JSON.stringify(response));
 
     } else {
@@ -40,5 +39,4 @@ export const reg = (nextPlayerId: number, message: WSMessage, ws: WebSocket): nu
       ws.send(JSON.stringify(response));
     }
   }
-  return nextPlayerId;
 }
