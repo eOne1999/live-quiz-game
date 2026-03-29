@@ -5,6 +5,7 @@ import { createGame } from './handlers/createGame';
 import { joinGame } from './handlers/joinGame';
 import { startGame } from './handlers/startGame';
 import { answer } from './handlers/answer';
+import { disconnect } from './handlers/disconnect';
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 const wss = new WebSocketServer({ port: PORT });
@@ -37,7 +38,5 @@ wss.on('connection', (ws: AuthenticatedWebSocket) => {
     }
   })
 
-  ws.on('close', () => {
-    console.log('disconnected');
-  });
+  ws.on('close', () => disconnect(ws));
 });
