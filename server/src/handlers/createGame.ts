@@ -55,5 +55,12 @@ export const createGame = (message: WSMessage, ws: AuthenticatedWebSocket) => {
     response.data.gameId = game.id;
     response.data.code = game.code;
     ws.send(JSON.stringify(response));
+
+    const updatePlayers = {
+      type: 'update_players',
+      data: game.players,
+      id: 0
+    }
+    ws.send(JSON.stringify(updatePlayers));
   }
 };

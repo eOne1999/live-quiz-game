@@ -3,6 +3,7 @@ import { AuthenticatedWebSocket, WSMessage } from './types';
 import { reg } from './handlers/reg';
 import { createGame } from './handlers/createGame';
 import { joinGame } from './handlers/joinGame';
+import { startGame } from './handlers/startGame';
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 const wss = new WebSocketServer({ port: PORT });
@@ -25,6 +26,9 @@ wss.on('connection', (ws: AuthenticatedWebSocket) => {
         break;
       case 'join_game':
         joinGame(message, ws);
+        break;
+      case 'start_game':
+        startGame(message, ws);
         break;
     }
   })
