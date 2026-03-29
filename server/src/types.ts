@@ -95,3 +95,26 @@ export interface IGameCreated {
   },
   id: 0;
 }
+
+export interface IGameJoined {
+  type: 'game_joined',
+  data: {
+    gameId: string,
+  },
+  id: 0
+}
+
+export interface IPlayerJoined {
+  type: 'player_joined',
+  data: {
+    playerName: string,
+    playerCount: number,
+  },
+  id: 0
+}
+
+export interface IUpdatePlayers {
+  type: 'update_players',
+  data: Player[],
+  id: 0
+}

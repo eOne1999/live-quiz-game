@@ -1,5 +1,5 @@
 export const generateCode = () => {
-  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let code = '';
 
   for (let i = 0; i < 6; i++) {

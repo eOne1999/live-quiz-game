@@ -1,5 +1,5 @@
-import { games, incrementGameId, nextGameId } from "../store";
-import { AuthenticatedWebSocket, Game, IError, IGameCreated, Question, WSMessage } from "../types";
+import { games, incrementGameId, nextGameId, players } from "../store";
+import { AuthenticatedWebSocket, Game, IError, IGameCreated, Player, Question, WSMessage } from "../types";
 import { generateCode } from "../utils/generateCode";
 
 export const createGame = (message: WSMessage, ws: AuthenticatedWebSocket) => {
@@ -40,6 +40,17 @@ export const createGame = (message: WSMessage, ws: AuthenticatedWebSocket) => {
     }
     games.set(game.id, game);
     incrementGameId();
+
+    const playerData = players.get(ws.playerId);
+    if (!playerData) return;
+
+    const player: Player = {
+      name: playerData.name,
+      index: ws.playerId.toString(),
+      score: 0,
+      ws: ws,
+    };
+    game.players.push(player);
 
     response.data.gameId = game.id;
     response.data.code = game.code;
