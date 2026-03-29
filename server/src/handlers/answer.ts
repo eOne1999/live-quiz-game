@@ -1,5 +1,6 @@
 import { games } from "../store";
 import { AnswerData, AuthenticatedWebSocket, Game, IError, WSMessage } from "../types";
+import { endQuestion } from "./endQuestion";
 
 export const answer = (message: WSMessage, ws: AuthenticatedWebSocket) => {
   const answerData: AnswerData = message.data;
@@ -36,6 +37,11 @@ export const answer = (message: WSMessage, ws: AuthenticatedWebSocket) => {
         id: 0
       }
       ws.send(JSON.stringify(response));
+
+      const activePlayers = game.players.filter(p => p.index !== game.hostId);
+      if (game.playerAnswers.size === activePlayers.length) {
+        endQuestion(game);
+      }
     }
   }
 };

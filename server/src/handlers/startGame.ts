@@ -1,5 +1,6 @@
 import { games } from "../store";
 import { AuthenticatedWebSocket, Game, IError, WSMessage } from "../types";
+import { endQuestion } from "./endQuestion";
 
 export const startGame = (message: WSMessage, ws: AuthenticatedWebSocket) => {
   const game: Game | undefined = games.get(message.data.gameId);
@@ -38,5 +39,7 @@ export const startGame = (message: WSMessage, ws: AuthenticatedWebSocket) => {
       id: 0
     };
     game.players.forEach(player => player.ws?.send(JSON.stringify(broadcast)));
+    game.questionStartTime = Date.now();
+    game.questionTimer = setTimeout(() => endQuestion(game), question.timeLimitSec * 1000);
   }
 };
