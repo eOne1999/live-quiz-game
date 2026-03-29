@@ -6,4 +6,7 @@ export const nameToId = new Map<string, number | string>();
 export const games = new Map<number | string, Game>();
 
 export let nextPlayerId = 1;
-export const incrementPlayerId = () => { nextPlayerId++ };
+export const incrementPlayerId = () => nextPlayerId++;
+
+export let nextGameId = 1;
+export const incrementGameId = () => nextGameId++;

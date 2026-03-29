@@ -1,8 +1,8 @@
 import { incrementPlayerId, nameToId, nextPlayerId, players } from "../store";
-import { AuthenticatedWebSocket, IReg, WSMessage } from "../types";
+import { AuthenticatedWebSocket, IReg, RegData, WSMessage } from "../types";
 
 export const reg = (message: WSMessage, ws: AuthenticatedWebSocket) => {
-  const { name, password } = message.data;
+  const { name, password }: RegData = message.data;
   const existingPlayerId = nameToId.get(name);
   const response: IReg = {
     type: 'reg',

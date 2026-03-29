@@ -70,6 +70,12 @@ export interface AnswerData {
   answerIndex: number;
 }
 
+export interface IError {
+  type: 'error',
+  data: { message: string },
+  id: 0,
+}
+
 export interface IReg {
   type: 'reg',
   data: {
@@ -78,5 +84,14 @@ export interface IReg {
     error: boolean,
     errorText: string,
   },
-  id: 0
+  id: 0;
+}
+
+export interface IGameCreated {
+  type: 'game_created',
+  data: {
+    gameId: string,
+    code: string,
+  },
+  id: 0;
 }
